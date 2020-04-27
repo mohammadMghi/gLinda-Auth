@@ -18,7 +18,7 @@ type userController struct {
 
 type UserController interface {
 	SignIn(c echo.Context) error
-
+	SignUp(c echo.Context) error
 }
 
 func NewUserController(us interactor.UserInteractor) UserController {
@@ -51,4 +51,24 @@ func (uc *userController) SignIn(c echo.Context) (err error) {
 	}
 
 	return c.JSON(http.StatusOK, token)
+}
+
+func (uc *userController)SignUp(c echo.Context) (err error){
+	userData := new(model.User)
+	//invalidation data before pass
+	if err = c.Bind(userData); err != nil {
+		return
+	}
+	if !(userData.Email != "" && userData.Password != ""){
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "Username or Password is empty"}
+	}
+	if !(len(userData.Email) <= 100 && len(userData.Password) <= 200){
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "Username or Password len's is so long !"}
+	}
+	u,err := uc.userInteractor.GetForSignUp(*userData)
+	if err != nil{
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err.Error()}
+	}
+
+	return c.JSON(http.StatusOK ,u)
 }

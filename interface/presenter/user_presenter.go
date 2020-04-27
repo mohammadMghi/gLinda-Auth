@@ -13,7 +13,7 @@ type userPresenter struct {
 
 type UserPresenter interface {
 	ResponseUserSignIn(us model.User) (string,error)
-	ResponseUserSignUp(us model.User) error
+	ResponseUserSignUp(us model.User) (model.User,error)
 }
 
 func NewUserPresenter() UserPresenter {
@@ -35,8 +35,8 @@ func (up *userPresenter) ResponseUserSignIn(u model.User) (s string,err error) {
 	}
 	return u.Token,nil
 }
-func (up *userPresenter) ResponseUserSignUp(us model.User) error {
+func (up *userPresenter) ResponseUserSignUp(us model.User) (model.User,error) {
 	//handles user ,convert data before pass to view
 
-	return nil
+	return us,nil
 }

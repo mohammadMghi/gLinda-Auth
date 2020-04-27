@@ -1,12 +1,12 @@
 package model
 
 type User struct {
-	ID        uint      `gorm:"primary_key" json:"id"`
+	ID        int64      `gorm:"primary_key" json:"id"`
 	//Name      string    `json:"name"`
 	//Age       string    `json:"age"`
-	Email     string    `json:"email"`
-	Password  string    `json:"password"`
-	Token     string    `json:"token,omitempty"`
+	Email     string    `gorm="email" json:"email"`
+	Password  string    `gorm="password" json:"password"`
+	Token     string    `gorm:"-", json:"token,omitempty"`
 	//CreatedAt time.Time `json:"created_at"`
 	//UpdatedAt time.Time `json:"updated_at"`
 	//DeletedAt time.Time `json:"deleted_at"`

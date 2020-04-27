@@ -3,9 +3,11 @@ package datastore
 import (
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+
 	"log"
 
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+
 )
 
 func NewDB() *gorm.DB {
